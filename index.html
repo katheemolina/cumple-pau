@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC Paulita 🎁</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8c471;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .boton {
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .si {
+            background-color: #2ecc71;
+            color: white;
+            position: absolute;
+        }
+        .no {
+            background-color: #e74c3c;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>¿Deseas recibir un regalo? 🎁</h1>
+    <button class="boton si" id="btnSi">Sí 😃</button>
+    <button class="boton no" onclick="window.location.href='pre-memory.html'">No 😭</button>
+
+    <script>
+        const btnSi = document.getElementById("btnSi");
+
+        btnSi.addEventListener("mouseover", () => {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            btnSi.style.left = `${x}px`;
+            btnSi.style.top = `${y}px`;
+        });
+
+        btnSi.addEventListener("click", () => {
+            alert("¡JAJA, lo lograste! 🎉 Pero tu regalo aún está en camino... 😅");
+        });
+    </script>
+
+</body>
+</html>

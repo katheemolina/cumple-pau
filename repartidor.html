@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Regalo Está en Camino 🎁</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        #repartidor { font-size: 50px; position: absolute; }
+    </style>
+</head>
+<body>
+    <h1>¡Feliz Cumpleaños Paulita! 🎉</h1>
+    <h2> 🖤🤍🤎 Te amamossss 🖤🤍🤎  </h2>
+    <p>Tu regalo está en camino... pero el repartidor se perdió 😅</p>
+    <p id="repartidor">🚚</p>
+
+    <script>
+        let camion = document.getElementById("repartidor");
+
+        function moverCamion() {
+            // Generar posiciones aleatorias de inicio en la pantalla
+            let xInicio = Math.random() * (window.innerWidth - 50); // 50 es el tamaño del camión
+            let yInicio = Math.random() * (window.innerHeight - 50); // Para que no se salga de la pantalla
+
+            camion.style.left = `${xInicio}px`;
+            camion.style.top = `${yInicio}px`;
+
+            // Elegir una dirección aleatoria para el movimiento
+            let direccion = Math.random() < 0.5 ? 1 : -1; // 1 para izquierda a derecha, -1 para derecha a izquierda
+
+            let x = xInicio;
+            let y = yInicio;
+
+            let distancia = 100 + Math.random() * 200; // Recorrido aleatorio entre 100 y 300 píxeles
+
+            // Mover el camión
+            function recorrer() {
+                x += direccion * 5; // Mover 5 píxeles por vez
+                if (Math.abs(x - xInicio) >= distancia) {
+                    clearInterval(intervalo); // Detener el movimiento
+                    setTimeout(moverCamion, 500); // Pausa antes de reiniciar el movimiento en otro lugar
+                } else {
+                    camion.style.left = `${x}px`;
+                    camion.style.top = `${y}px`;
+                }
+            }
+
+            let intervalo = setInterval(recorrer, 30); // Mover el camión cada 30ms
+        }
+
+        moverCamion(); // Iniciar el movimiento
+    </script>
+</body>
+</html>

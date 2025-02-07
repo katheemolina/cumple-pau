@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐶 Recoge los Huesos 🦴</title>
+    <style>
+        body { 
+            text-align: center; 
+            background-color: #e1f5fe; 
+            font-family: Arial, sans-serif; 
+        }
+        #game-container { 
+            position: relative; 
+            width: 400px; 
+            height: 400px; 
+            margin: auto; 
+            border: 2px solid #000; 
+            background: #c8e6c9; 
+            overflow: hidden; 
+        }
+        .dog { 
+            width: 80px; 
+            position: absolute; 
+            bottom: 10px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+        }
+        .bone { 
+            font-size: 30px; 
+            position: absolute; 
+        }
+        .controls { 
+            margin-top: 10px; 
+        }
+        .btn { 
+            padding: 10px; 
+            font-size: 16px; 
+            margin: 5px; 
+            cursor: pointer; 
+        }
+        #win-message { 
+            display: none; 
+            font-size: 18px; 
+            margin-top: 20px; 
+            color: #00796b; 
+        }
+        #next-game-btn { 
+            display: none; 
+            padding: 10px 20px; 
+            font-size: 18px; 
+            background: #ff9800; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            margin-top: 10px; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🦴 El Perrito y los Huesos 🐶</h1>
+    <p>Puntos: <span id="score">0</span>/15</p>
+    
+    <div id="game-container">
+        <img src="img/11.jpg" class="dog" id="dog">
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="moveDog('left')">⬅️ Izquierda</button>
+        <button class="btn" onclick="moveDog('right')">➡️ Derecha</button>
+    </div>
+
+    <p id="win-message">✨ Que ricos huesitossss!! 🐶❤️</p>
+    <button id="next-game-btn" onclick="nextGame()">Siguiente 🎁 ▶</button>
+
+    <script>
+        let dog = document.getElementById("dog");
+        let score = 0;
+        const goal = 15; // Meta de puntos
+
+        function moveDog(direction) {
+            let currentLeft = parseInt(dog.style.left || "180px");
+            if (direction === "left" && currentLeft > 10) {
+                dog.style.left = (currentLeft - 40) + "px";
+            }
+            if (direction === "right" && currentLeft < 350) {
+                dog.style.left = (currentLeft + 40) + "px";
+            }
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft") moveDog("left");
+            if (e.key === "ArrowRight") moveDog("right");
+        });
+
+        function createBone() {
+            let bone = document.createElement("div");
+            bone.classList.add("bone");
+            bone.innerHTML = "🦴"; 
+            bone.style.left = Math.random() * 350 + "px";
+            bone.style.top = "0px";
+            document.getElementById("game-container").appendChild(bone);
+
+            let boneFall = setInterval(() => {
+                let boneTop = parseInt(bone.style.top) || 0;
+                if (boneTop > 350) {
+                    let dogX = dog.offsetLeft;
+                    let boneX = bone.offsetLeft;
+                    if (Math.abs(dogX - boneX) < 60) {
+                        score++;
+                        document.getElementById("score").innerText = `${score}/15`;
+                        checkWin();
+                    }
+                    bone.remove();
+                    clearInterval(boneFall);
+                } else {
+                    bone.style.top = boneTop + 10 + "px";
+                }
+            }, 100);
+        }
+
+        function checkWin() {
+            if (score >= goal) {
+                document.getElementById("win-message").style.display = "block";
+                document.getElementById("next-game-btn").style.display = "block";
+            }
+        }
+
+        function nextGame() {
+            window.location.href = "repartidor.html"; // Cambia esto con la URL del siguiente juego
+        }
+
+        setInterval(createBone, 1500);
+    </script>
+
+</body>
+</html>

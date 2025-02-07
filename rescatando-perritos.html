@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐶 Rescata a los Perritos 🎯</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #ffe4b5;
+    overflow: hidden;
+    padding-top: 20px; /* Agrega espacio arriba en toda la página */
+}
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px; /* Reduce espacio debajo del título */
+}
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 50vh; /* Reducimos la altura del área del juego */
+    margin: 0 auto; /* Centra el juego */
+}
+.dog {
+    width: 150px; /* Aumentamos el tamaño */
+    height: 150px;
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.dog:active {
+    transform: scale(1.2);
+}
+
+#score {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px; /* Ajusta espacio debajo del puntaje */
+}
+#mensaje-final {
+    display: none;
+    font-size: 20px;
+    color: #d35400;
+    margin-top: 10px; /* Reduce el espacio antes del mensaje final */
+}
+#next-game-btn {
+    display: none;
+    margin-top: 10px; /* Mantiene el botón más cerca del mensaje */
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#next-game-btn:hover {
+    background-color: #e65c00;
+}
+
+    </style>
+</head>
+<body>
+
+    <h1>🎯 Rescata a los Perritos 🐶</h1>
+    <p id="score">Perritos rescatados: <span>0</span> / 15</p>
+    <div id="game-container"></div>
+    <p id="mensaje-final">Esperamos que la vida te devuelva todo el amor que das a los peluditos. Gracias por ser su héroe. 💖🐶</p>
+    
+    <!-- Botón para ir al próximo juego -->
+    <button id="next-game-btn" onclick="location.href='lolo-huesitos.html'">Ir al próximo juego 🚀</button>
+
+    <script>
+        let score = 0;
+        const goal = 15;
+        const maxDogsOnScreen = 2;
+        const gameContainer = document.getElementById("game-container");
+
+        // Lista de imágenes de perritos
+        const dogImages = ["img/13.jpg", "img/6.jpg", "img/8.jpg"];
+
+        function createDog() {
+            if (score >= goal || document.querySelectorAll(".dog").length >= maxDogsOnScreen) return;
+
+            let dog = document.createElement("img");
+            dog.src = dogImages[Math.floor(Math.random() * dogImages.length)];
+            dog.classList.add("dog");
+
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight * 0.5 - 100); 
+
+            
+            dog.style.left = `${x}px`;
+            dog.style.top = `${y}px`;
+
+            dog.addEventListener("click", () => {
+                score++;
+                document.querySelector("#score span").textContent = score;
+                dog.remove();
+
+                if (score === goal) {
+                    document.getElementById("mensaje-final").style.display = "block";
+                    document.getElementById("next-game-btn").style.display = "block";
+                    gameContainer.innerHTML = ""; // Elimina perritos
+                } else {
+                    createDog();
+                }
+            });
+
+            gameContainer.appendChild(dog);
+
+            setTimeout(() => {
+                if (document.body.contains(dog) && score < goal) dog.remove();
+                createDog();
+            }, 2500);
+        }
+
+        // Inicialmente aparecen solo 2 perritos
+        for (let i = 0; i < maxDogsOnScreen; i++) createDog();
+    </script>
+
+</body>
+</html>
