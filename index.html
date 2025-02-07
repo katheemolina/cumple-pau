@@ -44,22 +44,18 @@
 
     <h1>¿Deseas recibir un regalo? 🎁</h1>
     <button class="boton si" id="btnSi">Sí 😃</button>
-    <button class="boton no" onclick="window.location.href='pre-memory.html'">No 😭</button>
+    <button class="boton no" onclick="window.location.href='./pre-memory.html'">No 😭</button>
 
     <script>
         const btnSi = document.getElementById("btnSi");
 
-        btnSi.addEventListener("mouseover", () => {
+        btnSi.addEventListener("click", () => {
+            // Hacer que el botón cambie de lugar
             const x = Math.random() * (window.innerWidth - 100);
             const y = Math.random() * (window.innerHeight - 50);
             btnSi.style.left = `${x}px`;
             btnSi.style.top = `${y}px`;
         });
-
-        btnSi.addEventListener("click", () => {
-            alert("¡JAJA, lo lograste! 🎉 Pero tu regalo aún está en camino... 😅");
-        });
     </script>
-
 </body>
 </html>
